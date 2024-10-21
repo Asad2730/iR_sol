@@ -1,325 +1,514 @@
 {
-    "openapi": "3.0.0",
-    "paths": {
-      "/auth/login": {
-        "post": {
-          "operationId": "AuthController_login",
-          "summary": "User login with email",
-          "parameters": [],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "email"
-                  ]
-                }
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "User login with email",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
               }
             }
-          },
-          "responses": {
-            "201": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "auth"
-          ]
-        }
-      },
-      "/users": {
-        "post": {
-          "operationId": "UserController_createUser",
-          "summary": "Create a new user",
-          "parameters": [],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateUserDto"
-                },
-                "examples": {
-                  "example1": {
-                    "summary": "Create user example",
-                    "value": {
-                      "email": "johndoe@example.com",
-                      "name": "John Doe",
-                      "password": "strongpassword",
-                      "role": "Admin"
-                    }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "UserController_createUser",
+        "summary": "Create a new user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Create user example",
+                  "value": {
+                    "email": "johndoe@example.com",
+                    "name": "John Doe",
+                    "password": "strongpassword",
+                    "role": "Admin"
                   }
                 }
               }
             }
-          },
-          "responses": {
-            "201": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "users"
-          ]
+          }
         },
-        "get": {
-          "operationId": "UserController_getUsers",
-          "summary": "Get paginated list of users",
-          "parameters": [
-            {
-              "name": "limit",
-              "required": false,
-              "in": "query",
-              "description": "Limit for pagination",
-              "schema": {
-                "example": 10
-              }
-            },
-            {
-              "name": "page",
-              "required": false,
-              "in": "query",
-              "description": "Page number for pagination",
-              "schema": {
-                "example": 1
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "users"
-          ]
-        }
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
       },
-      "/users/email": {
-        "get": {
-          "operationId": "UserController_getUserByEmail",
-          "summary": "Get user by email",
-          "parameters": [
-            {
-              "name": "email",
-              "required": true,
-              "in": "query",
-              "description": "Email ID of the user",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
+      "get": {
+        "operationId": "UserController_getUsers",
+        "summary": "Get paginated list of users",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Limit for pagination",
+            "schema": {
+              "example": 10
             }
           },
-          "tags": [
-            "users"
-          ]
-        }
-      },
-      "/users/{userId}": {
-        "get": {
-          "operationId": "UserController_getUserById",
-          "summary": "Get user by ID",
-          "parameters": [
-            {
-              "name": "userId",
-              "required": true,
-              "in": "path",
-              "description": "ID of the user",
-              "schema": {
-                "type": "string"
-              }
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {
+              "example": 1
             }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "users"
-          ]
-        }
-      },
-      "/tasks/completion-summary": {
-        "get": {
-          "operationId": "TaskController_getTaskCompletionSummary",
-          "summary": "Fetch the task completion summary grouped by status (To Do, In Progress, Completed)",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "tasks"
-          ]
-        }
-      },
-      "/tasks/user-performance/{userId}": {
-        "get": {
-          "operationId": "TaskController_getUserPerformanceReport",
-          "summary": "Get performance report for a user, showing tasks grouped by status",
-          "parameters": [
-            {
-              "name": "userId",
-              "required": true,
-              "in": "path",
-              "description": "ID of the user for whom the performance report is being fetched",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "tasks"
-          ]
-        }
-      },
-      "/tasks/overdue-tasks": {
-        "get": {
-          "operationId": "TaskController_getOverdueTasksSummary",
-          "summary": "Fetch summary of overdue tasks grouped by project",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "tasks"
-          ]
-        }
-      },
-      "/tasks/project-summary/{projectId}": {
-        "get": {
-          "operationId": "TaskController_getProjectTaskSummary",
-          "summary": "Get task summary for a project grouped by status and members",
-          "parameters": [
-            {
-              "name": "projectId",
-              "required": true,
-              "in": "path",
-              "description": "ID of the project for which the task summary is being fetched",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "tasks"
-          ]
-        }
-      },
-      "/projects/{projectId}/summary": {
-        "get": {
-          "operationId": "ProjectController_getProjectTaskSummary",
-          "summary": "Get task summary for a project with pagination",
-          "parameters": [
-            {
-              "name": "projectId",
-              "required": true,
-              "in": "path",
-              "description": "ID of the project",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "limit",
-              "required": false,
-              "in": "query",
-              "description": "Limit for pagination",
-              "schema": {
-                "example": 10
-              }
-            },
-            {
-              "name": "page",
-              "required": false,
-              "in": "query",
-              "description": "Page number for pagination",
-              "schema": {
-                "example": 1
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "projects"
-          ]
-        }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
       }
     },
-    "info": {
-      "title": "Task Management API",
-      "description": "API for managing users, projects, and tasks",
-      "version": "1.0",
-      "contact": {
-  
+    "/users/email": {
+      "get": {
+        "operationId": "UserController_getUserByEmail",
+        "summary": "Get user by email",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "query",
+            "description": "Email ID of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
       }
     },
-    "tags": [],
-    "servers": [],
-    "components": {
-      "schemas": {
-        "CreateUserDto": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "example": "johndoe@example.com"
-            },
-            "name": {
-              "type": "string",
-              "example": "John Doe"
-            },
-            "password": {
-              "type": "string",
-              "example": "strongpassword"
-            },
-            "role": {
-              "type": "string",
-              "example": "Admin",
-              "enum": [
-                "Admin",
-                "Manager",
-                "Member"
-              ]
+    "/users/{userId}": {
+      "get": {
+        "operationId": "UserController_getUserById",
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/tasks/completion-summary": {
+      "get": {
+        "operationId": "TaskController_getTaskCompletionSummary",
+        "summary": "Fetch the task completion summary grouped by status (To Do, In Progress, Completed)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/user-performance/{userId}": {
+      "get": {
+        "operationId": "TaskController_getUserPerformanceReport",
+        "summary": "Get performance report for a user, showing tasks grouped by status",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "ID of the user for whom the performance report is being fetched",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/overdue-tasks": {
+      "get": {
+        "operationId": "TaskController_getOverdueTasksSummary",
+        "summary": "Fetch summary of overdue tasks grouped by project",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/project-summary/{projectId}": {
+      "get": {
+        "operationId": "TaskController_getProjectTaskSummary",
+        "summary": "Get task summary for a project grouped by status and members",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "description": "ID of the project for which the task summary is being fetched",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/add": {
+      "post": {
+        "operationId": "TaskController_addTask",
+        "summary": "Add a new task",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Add Task Example",
+                  "value": {
+                    "title": "New Task",
+                    "dueDate": "2024-10-31",
+                    "status": "To Do",
+                    "assignedTo": "60f8eae2f5d5e35d88e04d90",
+                    "project": "60f8eae2f5d5e35d88e04d91"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/tasks/{taskId}/assign": {
+      "patch": {
+        "operationId": "TaskController_assignTaskToUser",
+        "summary": "Assign task to a user",
+        "parameters": [
+          {
+            "name": "taskId",
+            "required": true,
+            "in": "path",
+            "description": "ID of the task to assign",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "userId": "60f8eae2f5d5e35d88e04d90"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/projects/{projectId}/summary": {
+      "get": {
+        "operationId": "ProjectController_getProjectTaskSummary",
+        "summary": "Get task summary for a project with pagination",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "description": "ID of the project",
+            "schema": {
+              "type": "string"
             }
           },
-          "required": [
-            "email",
-            "name",
-            "password",
-            "role"
-          ]
-        }
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Limit for pagination",
+            "schema": {
+              "example": 10
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "projects"
+        ]
+      }
+    },
+    "/projects": {
+      "post": {
+        "operationId": "ProjectController_createProject",
+        "summary": "Create a new project",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjectDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Create Project Example",
+                  "value": {
+                    "name": "Website Redesign",
+                    "members": [
+                      "60f8eae2f5d5e35d88e04d90",
+                      "60f8eae2f5d5e35d88e04d91"
+                    ],
+                    "tasks": [
+                      "60f8eae2f5d5e35d88e04d93",
+                      "60f8eae2f5d5e35d88e04d94"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "projects"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Task Management API",
+    "description": "API for managing users, projects, and tasks",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "johndoe@example.com"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "password": {
+            "type": "string",
+            "example": "strongpassword"
+          },
+          "role": {
+            "type": "string",
+            "example": "Admin",
+            "enum": [
+              "Admin",
+              "Manager",
+              "Member"
+            ]
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "password",
+          "role"
+        ]
+      },
+      "CreateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Design new homepage layout"
+          },
+          "dueDate": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-10-30"
+          },
+          "status": {
+            "type": "string",
+            "example": "To Do",
+            "enum": [
+              "To Do",
+              "In Progress",
+              "Completed"
+            ]
+          },
+          "assignedTo": {
+            "type": "string",
+            "example": "5f8d04b8b54764421b7156f3"
+          },
+          "project": {
+            "type": "string",
+            "example": "5f8d04b8b54764421b7156f4"
+          }
+        },
+        "required": [
+          "title",
+          "dueDate",
+          "status",
+          "assignedTo",
+          "project"
+        ]
+      },
+      "CreateProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "New Website Redesign"
+          },
+          "members": {
+            "example": [
+              "60f8eae2f5d5e35d88e04d90",
+              "60f8eae2f5d5e35d88e04d91"
+            ],
+            "description": "Array of User IDs who are members of the project",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tasks": {
+            "example": [
+              "60f8eae2f5d5e35d88e04d93",
+              "60f8eae2f5d5e35d88e04d94"
+            ],
+            "description": "Array of Task IDs associated with the project",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "members",
+          "tasks"
+        ]
       }
     }
   }
+}
