@@ -15,6 +15,11 @@ export class ProjectService {
   ) {}
 
   async getProjectTaskSummary(projectId: string, page: number, limit: number) {
+   
+    if (!Types.ObjectId.isValid(projectId)) {
+      throw new Error('Invalid project ID');
+    }
+
     const cacheKey = `project_${projectId}_task_summary_${page}_${limit}`;
     
     const cachedData = await this.redisService.getCache(cacheKey);

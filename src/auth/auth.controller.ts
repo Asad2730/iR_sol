@@ -9,7 +9,15 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({ summary: 'User login with email' })
-  @ApiBody({ schema: { example: { email: 'user@example.com' } } })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        email: { type: 'string' },
+      },
+      required: ['email'],
+    },
+  })
   async login(@Body('email') email: string) {
     return this.authService.login(email);
   }

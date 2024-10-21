@@ -30,6 +30,9 @@ export class TaskService {
   }
 
   async getUserPerformanceReport(userId: string) {
+    if (!Types.ObjectId.isValid(userId)) {
+      throw new Error('Invalid user ID');
+    }
     return this.taskModel.aggregate([
       { $match: { assignedTo: new Types.ObjectId(userId) } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
@@ -58,6 +61,9 @@ export class TaskService {
   }
 
   async getProjectTaskSummary(projectId: string) {
+    if (!Types.ObjectId.isValid(projectId)) {
+      throw new Error('Invalid project ID');
+    }
     const cacheKey = `projectTaskSummary_${projectId}`;
     const cachedData = await this.cacheService.getCache(cacheKey);
     if (cachedData) {

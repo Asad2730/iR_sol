@@ -36,10 +36,20 @@ export class UserController {
     return this.userService.getUsers(+page, +limit);
   }
 
+  
+
+  @Get('/email')
+  @ApiOperation({ summary: 'Get user by email' })
+  @ApiQuery({ name: 'email', description: 'Email ID of the user', required: true })
+  async getUserByEmail(@Query('email') email: string) {
+    return this.userService.getUserByEmail(email);
+  }
+
   @Get(':userId')
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiParam({ name: 'userId', description: 'ID of the user' })
   async getUserById(@Param('userId') userId: string) {
     return this.userService.getUserById(userId);
   }
+
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/createUser.dto';
 
@@ -20,9 +20,15 @@ export class UserService {
     return this.userModel.find().skip(skip).limit(limit).exec();
   }
 
+  
   async getUserById(userId: string) {
-    return this.userModel.findById(userId).exec();
+    if (!Types.ObjectId.isValid(userId)) {
+      throw new Error('Invalid user ID');
+    }
+    const objectId = new Types.ObjectId(userId);
+    return this.userModel.findById(objectId).exec();
   }
+  
 
   async getUserByEmail(email: string) {
     return this.userModel.findOne({ email }).exec();
