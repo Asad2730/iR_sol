@@ -1,13 +1,49 @@
-run bun i or npm i or yarn
+Getting Started with Project Setup
+
+To initiate the project, follow these steps:
+
+Step 1: Install Dependencies
+
+Open your project terminal and run one of the following commands depending on your preferred package manager:
+- bun i
+- npm i
+- yarn 
+
+This command installs all necessary dependencies required for the project.
+
+Step 2: Configure Environment Variables
+
+Update the .env file by replacing REDIS_URL and MONGO_URL with your respective database URLs:
 
 
-replace base  REDIS_URL and REDIS_URL with your urls in e.nv 
+REDIS_URL=your_redis_url
+MONGO_URL=your_mongo_url
 
 
-in project terminal type bun start:dev
+Step 3: Start Development Server
+
+In the project terminal, type:
+
+
+bun start:dev
+
+
+This command starts the development server.
+
+Step 4: Test API Endpoints
+
+Open Postman and update the base URL to:
+
+
+http://localhost:3000
+
+
+Begin testing API endpoints.
 
 
 
-replace base url in postman with http://localhost:3000
+- Ensure you have the necessary package manager installed (Bun, npm, or Yarn).
+- Verify your Redis and MongoDB URLs are correctly updated in the .env file.
+- Use Postman to test API endpoints thoroughly.
 
-start testing
+By following these steps, you'll successfully set up and start testing your project.

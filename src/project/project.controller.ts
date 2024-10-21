@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { ApiTags, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
+import { CreateProjectDto } from './dto/createProject.dto';
 
 @ApiTags('projects')
 @Controller('projects')
@@ -19,4 +20,27 @@ export class ProjectController {
   ) {
     return this.projectService.getProjectTaskSummary(projectId, +page, +limit);
   }
+
+
+
+  @Post()
+  @ApiOperation({ summary: 'Create a new project' })
+  @ApiBody({
+    type: CreateProjectDto,
+    examples: {
+      example1: {
+        summary: 'Create Project Example',
+        value: {
+          name: 'Website Redesign',
+          members: ['60f8eae2f5d5e35d88e04d90', '60f8eae2f5d5e35d88e04d91'],
+          tasks: ['60f8eae2f5d5e35d88e04d93', '60f8eae2f5d5e35d88e04d94'],
+        },
+      },
+    },
+  })
+  async createProject(@Body() createProjectDto: CreateProjectDto) {
+    return this.projectService.createProject(createProjectDto);
+  }
+
+  
 }

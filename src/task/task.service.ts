@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Task, TaskDocument } from './schemas/task.schema';
 import { CacheService } from 'src/cache/cache.service'; 
+import { CreateTaskDto } from './dto/task.dto';
 
 @Injectable()
 export class TaskService {
@@ -96,6 +97,52 @@ export class TaskService {
     await this.cacheService.setCache(cacheKey, summary, 3600);
 
     return summary; 
+}
+
+async addTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  const { title, dueDate, status, assignedTo, project } = createTaskDto;
+
+  if (assignedTo && !Types.ObjectId.isValid(assignedTo)) {
+    throw new BadRequestException('Invalid user ID');
+  }
+
+  if (project && !Types.ObjectId.isValid(project)) {
+    throw new BadRequestException('Invalid project ID');
+  }
+
+  const newTask = new this.taskModel({
+    title,
+    dueDate,
+    status,
+    assignedTo: assignedTo ? new Types.ObjectId(assignedTo) : null,
+    project: project ? new Types.ObjectId(project) : null,
+  });
+
+ 
+  return newTask.save();
+}
+
+
+async assignTaskToUser(taskId: string, userId: string) {
+
+  if (!Types.ObjectId.isValid(taskId)) {
+    throw new Error('Invalid task ID');
+  }
+  if (!Types.ObjectId.isValid(userId)) {
+    throw new Error('Invalid user ID');
+  }
+  
+  const updatedTask = await this.taskModel.findByIdAndUpdate(
+    taskId,
+    { assignedTo: new Types.ObjectId(userId) },
+    { new: true } 
+  );
+
+  if (!updatedTask) {
+    throw new Error(`Task with ID ${taskId} not found`);
+  }
+
+  return updatedTask;
 }
 
 }
