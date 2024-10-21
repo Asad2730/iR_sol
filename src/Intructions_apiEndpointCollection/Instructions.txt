@@ -1,0 +1,13 @@
+run bun i or npm i or yarn
+
+
+replace base  REDIS_URL and REDIS_URL with your urls in e.nv 
+
+
+in project terminal type bun start:dev
+
+
+
+replace base url in postman with http://localhost:3000
+
+start testing
