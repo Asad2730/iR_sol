@@ -8,6 +8,7 @@ import { Task, TaskSchema } from 'src/task/schemas/task.schema';
 import { User, UserSchema } from 'src/user/schemas/user.schema';
 
 import { TaskModule } from 'src/task/task.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { TaskModule } from 'src/task/task.module';
       { name: User.name, schema: UserSchema },
       { name: Task.name, schema: TaskSchema },
     ]),
-    CacheModule
+    CacheModule,
+    AuthModule,
   ],
   controllers: [ProjectController],
   providers: [ProjectService],
