@@ -3,6 +3,8 @@ Getting Started with Project Setup
 To initiate the project, follow these steps:
 
 Step 1: Install Dependencies
+gitUrl:https://github.com/Asad2730/iR_sol
+
 
 Open your project terminal and run one of the following commands depending on your preferred package manager:
 - bun i
